@@ -8,22 +8,30 @@
         alt="Avatar"
       />
 
-      <img class="icon" src="../assets/icons/settings.png" alt="" />
+      <img class="icon" src="../assets/icons/settings.png" alt="settings" />
     </div>
 
     <nav class="nav">
       <ul class="nav__list">
-        <li><a class="nav__link" href="#">Приходи</a></li>
-        <li><a class="nav__link" href="#">Products</a></li>
-        <li><a class="nav__link" href="#">Users</a></li>
-        <li><a class="nav__link" href="#">Setings</a></li>
+        <li v-for="nav in navArray" :key="nav.path">
+          <RouterLink active-class="active" :to="nav.path" class="nav__link">
+            {{ nav.name }}
+          </RouterLink>
+        </li>
       </ul>
     </nav>
   </div>
 </template>
 
 <script>
-export default {};
+import { navArray } from '../utils/NavHelper';
+export default {
+  data() {
+    return {
+      navArray,
+    };
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -60,6 +68,7 @@ export default {};
   }
 
   &__link {
+    cursor: pointer;
     text-transform: uppercase;
     height: 52px;
   }
@@ -73,5 +82,9 @@ export default {};
   right: 18%;
   width: 28px;
   height: 28px;
+}
+
+.active {
+  color: pink;
 }
 </style>

@@ -26,6 +26,8 @@ h1 {
 }
 
 .users {
+  grid-column: 3/13;
+
   &__container {
     display: flex;
     flex-direction: column;
