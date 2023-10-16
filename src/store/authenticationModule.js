@@ -1,4 +1,4 @@
-import { fetchLogin } from '../api/authAPI';
+import { fetchLogin, fetchRegister } from '../api/authAPI';
 
 export const authenticationModule = {
   state: () => ({
@@ -22,6 +22,9 @@ export const authenticationModule = {
       state.logginError = bool;
     },
 
+    setSignUpError(state, bool) {
+      state.signUpError = bool;
+    },
   },
   actions: {
     onSendLogin({ commit }, data) {
@@ -37,7 +40,18 @@ export const authenticationModule = {
         });
     },
 
-    onSendSignUp({ commit }, data) {},
+    onSendSignUp({ commit }, data) {
+      commit('setSignUpError', false);
+
+      fetchRegister(data)
+        .then((answ) => {
+          commit('setUserData', answ);
+          commit('setIsAuth', true);
+        })
+        .catch(() => {
+          commit('setSignUpError', true);
+        });
+    },
   },
   namespaced: true,
 };

@@ -8,8 +8,8 @@
 
       <div class="header__info">
         <div class="header__info-date">
-          <p>{{ getDate(new Date()) }}</p>
-          <span>12 MAR,2017</span>
+          <p>{{ currentDate }}</p>
+          <span>{{ currentFormattedDate }}</span>
         </div>
 
         <div class="header__info-time">
@@ -29,31 +29,30 @@
 <script>
 export default {
   created() {
-    this.updateTimeState();
-
-    setInterval(this.updateTimeState, 60000);
+    this.updateDateTime();
+    setInterval(this.updateDateTime, 60000);
   },
   data() {
     return {
       count: 0,
+      currentDate: this.getCurrentDate(),
+      currentFormattedDate: this.getCurrentFormattedDate(),
       currentTime: this.getCurrentTime(),
     };
   },
-
   methods: {
-    getDate(date) {
-      const daysOfWeek = [
-        'Sunday',
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-      ];
-      const dayIndex = date.getDay();
-      const dayName = daysOfWeek[dayIndex];
-      return dayName;
+    getCurrentDate() {
+      const now = new Date();
+      return now.toLocaleDateString(undefined, { weekday: 'long' });
+    },
+
+    getCurrentFormattedDate() {
+      const now = new Date();
+      return now.toLocaleDateString(undefined, {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
     },
 
     getCurrentTime() {
@@ -64,7 +63,9 @@ export default {
       return `${hours}:${minutes < 10 ? '0' : ''}${minutes}`;
     },
 
-    updateTimeState() {
+    updateDateTime() {
+      this.currentDate = this.getCurrentDate();
+      this.currentFormattedDate = this.getCurrentFormattedDate();
       this.currentTime = this.getCurrentTime();
     },
   },

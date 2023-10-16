@@ -11,6 +11,7 @@
               placeholder="Write your full name"
               class="wrapper__input"
               type="text"
+              v-model="fullName"
             />
           </div>
           <div class="wrapper__input-wrapper">
@@ -19,6 +20,7 @@
               placeholder="Write your email"
               class="wrapper__input"
               type="text"
+              v-model="email"
             />
           </div>
 
@@ -28,6 +30,7 @@
               placeholder="Write your password"
               class="wrapper__input"
               type="text"
+              v-model="password"
             />
           </div>
 
@@ -60,6 +63,11 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
+import { toast } from 'vue3-toastify';
+
+import router from '../router/router';
+
 export default {
   data() {
     return {
@@ -71,15 +79,55 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      onSendSignUp: 'auth/onSendSignUp',
+    }),
+
     sendSignUp() {
       const objToSend = {
         fullName: this.fullName,
         email: this.email,
         password: this.password,
-        avatarUrl: this.avatarUrl,
       };
 
-      
+      if (this.avatarUrl) {
+        objToSend.avatarUrl = this.avatarUrl;
+      }
+
+      this.onSendSignUp(objToSend);
+
+      this.fullName = '';
+      this.email = '';
+      this.password = '';
+      this.avatarUrl = '';
+    },
+  },
+
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.auth.isAuth,
+      signUpError: (state) => state.auth.logginError,
+    }),
+  },
+
+  watch: {
+    isAuth(newValue) {
+      if (newValue) {
+        toast.success('Sign up was successful', {
+          autoClose: 1000,
+          onClose: () => {
+            router.push('/');
+          },
+        });
+      }
+    },
+
+    signUpError(newValue) {
+      if (newValue) {
+        toast.error('Failed to register', {
+          autoClose: 1000,
+        });
+      }
     },
   },
 };
