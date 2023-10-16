@@ -1,5 +1,6 @@
 <template>
-  <div class="sidebar">
+  <div class="sidebar shadow-sm">
+    {{ this.$store.auth }}
     <div class="sidebar__profile sidebar__profile-margin">
       <img
         src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"

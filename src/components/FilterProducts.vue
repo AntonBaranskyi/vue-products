@@ -33,7 +33,7 @@ export default {};
 <style lang="scss" scoped>
 .filters {
   display: flex;
- 
+
   gap: 35px;
 
   &__wrapper {

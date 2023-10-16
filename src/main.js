@@ -1,11 +1,16 @@
 import { createApp } from 'vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import bootstrap from 'bootstrap/dist/js/bootstrap.bundle.js';
-import App from './App.vue';
-import './style.css';
+import Notifications from '@kyvg/vue3-notification';
 
+import App from './App.vue';
+
+import './style.css';
+import 'vue3-toastify/dist/index.css';
+
+import store from './store/store';
 import router from './router/router';
 
 const app = createApp(App);
 
-app.use(bootstrap).use(router).mount('#app');
+app.use(store).use(Notifications).use(bootstrap).use(router).mount('#app');

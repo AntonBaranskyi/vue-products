@@ -9,6 +9,7 @@ export default {
 </script>
 
 <template>
+  <notifications />
   <Header />
   <div class="main grid">
     <RouterView />
@@ -26,5 +27,7 @@ export default {
   grid-column: 3/13;
 
   background-color: #f0f3f5;
+
+  height: calc(100vh - 110px);
 }
 </style>
