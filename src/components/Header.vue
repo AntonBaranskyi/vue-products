@@ -1,7 +1,10 @@
 <template>
   <header class="header shadow-sm">
     <div class="container header__container">
-      <div @click="$router.push('/')" class="header__logo">
+      <div
+        @click="$router.push(`${isAuth ? '/main' : '/'}`)"
+        class="header__logo"
+      >
         <img class="header__logo-item" src="../assets/logo.png" alt="Logo" />
         <h2 class="header__logo-title text-success">Inventory</h2>
       </div>
@@ -27,6 +30,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   created() {
     this.updateDateTime();
@@ -39,6 +43,12 @@ export default {
       currentFormattedDate: this.getCurrentFormattedDate(),
       currentTime: this.getCurrentTime(),
     };
+  },
+
+  computed: {
+    ...mapState({
+      isAuth: (state) => state.auth.isAuth,
+    }),
   },
   methods: {
     getCurrentDate() {

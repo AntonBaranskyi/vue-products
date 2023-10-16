@@ -4,23 +4,20 @@ import Register from '../components/Register.vue';
 import MainPage from '../pages/MainPage.vue';
 import OrdersPage from '../pages/OrdersPage.vue';
 import UsersPage from '../pages/UsersPage.vue';
-import AuthPage from '../pages/AuthPage.vue';
 
 const routes = [
   {
-    path: '/auth',
-    component: AuthPage,
-    children: [
-      { path: 'login', component: Login },
-      {
-        path: 'register',
-        component: Register,
-      },
-    ],
+    path: '/',
+    component: Login,
   },
 
   {
-    path: '/',
+    path: '/signUp',
+    component: Register,
+  },
+
+  {
+    path: '/main',
     component: MainPage,
   },
 

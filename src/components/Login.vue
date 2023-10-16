@@ -34,7 +34,7 @@
           </button>
         </form>
 
-        <RouterLink to="register" type="submit" class="wrapper__register">
+        <RouterLink to="signUp" type="submit" class="wrapper__register">
           Sign Up
         </RouterLink>
       </div>
@@ -86,7 +86,7 @@ export default {
         toast.success('Loggin was successful', {
           autoClose: 1000,
           onClose: () => {
-            this.$router.push('/');
+            this.$router.push('/main');
           },
         });
       }
@@ -100,7 +100,7 @@ export default {
     },
     loginSuccess(newValue) {
       if (newValue) {
-        this.$router.push('/');
+        this.$router.push('/main');
       }
     },
   },

@@ -116,7 +116,7 @@ export default {
         toast.success('Sign up was successful', {
           autoClose: 1000,
           onClose: () => {
-            router.push('/');
+            router.push('/main');
           },
         });
       }
