@@ -45,7 +45,10 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 
+import { watchEffect } from 'vue';
+
 import { toast } from 'vue3-toastify';
+import router from '../router/router';
 
 export default {
   data() {
@@ -56,6 +59,22 @@ export default {
     };
   },
 
+  computed: {
+    ...mapState('auth', {
+      isAuth: (state) => state.isAuth,
+      logginError: (state) => state.logginError,
+    }),
+  },
+
+  // setup() {
+  //   const isAuth = ref(false);
+  //   // Використовуйте watchEffect для реакції на зміни isAuth
+  //   watchEffect(() => {
+  //     if (isAuth) {
+  //       router.push('/main');
+  //     }
+  //   });
+  // },
   methods: {
     ...mapActions({
       onSendLogin: 'auth/onSendLogin',
@@ -71,13 +90,6 @@ export default {
       this.email = '';
       this.password = '';
     },
-  },
-
-  computed: {
-    ...mapState({
-      isAuth: (state) => state.auth.isAuth,
-      logginError: (state) => state.auth.logginError,
-    }),
   },
 
   watch: {

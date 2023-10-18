@@ -1,23 +1,36 @@
 <template>
   <div class="orders">
     <div class="container orders__info">
-      <h1>Orders / 5</h1>
+      <h1>Orders / {{ orders.length }}</h1>
     </div>
 
     <div class="orders__container">
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
-      <OrderItem />
+      <OrderItem v-for="order in orders" :key="order._id" :order="order" />
     </div>
   </div>
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex';
+
 import OrderItem from './OrderItem.vue';
 export default {
   components: {
     OrderItem,
+  },
+  computed: {
+    ...mapState('orders', {
+      orders: (state) => state.orders,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      onGetOrders: 'orders/onGetOrders',
+    }),
+  },
+
+  mounted() {
+    this.onGetOrders();
   },
 };
 </script>

@@ -3,10 +3,17 @@
     {{ this.$store.auth }}
     <div class="sidebar__profile sidebar__profile-margin">
       <img
-        src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
-        class="sidebar__profile-image rounded-circle"
-        style="width: 150px"
-        alt="Avatar"
+        v-if="userData?.avatarUrl"
+        :src="userData?.avatarUrl"
+        alt="photo"
+        class="user__photo-item"
+      />
+
+      <img
+        v-else
+        src="../assets/default.png"
+        alt="photo"
+        class="user__photo-item"
       />
 
       <img class="icon" src="../assets/icons/settings.png" alt="settings" />
@@ -26,11 +33,19 @@
 
 <script>
 import { navArray } from '../utils/NavHelper';
+import { mapState, mapActions } from 'vuex';
+
 export default {
   data() {
     return {
       navArray,
     };
+  },
+
+  computed: {
+    ...mapState('auth', {
+      userData: (state) => state.userData,
+    }),
   },
 };
 </script>
@@ -58,6 +73,13 @@ export default {
     &-image {
     }
   }
+}
+
+.user__photo-item {
+  width: 150px;
+  height: 150px;
+
+  opacity: 0.6;
 }
 
 .nav {

@@ -2,15 +2,23 @@
   <div class="user">
     <div class="user__photo">
       <img
-        src="https://mdbcdn.b-cdn.net/img/new/avatars/1.webp"
+        v-if="user.avatarUrl"
+        :src="user.avatarUrl"
+        alt="photo"
+        class="user__photo-item"
+      />
+
+      <img
+        v-else
+        src="../assets/default.png"
         alt="photo"
         class="user__photo-item"
       />
     </div>
-    <p class="user__name">Anton Baranskiy</p>
+    <p class="user__name">{{ user.fullName }}</p>
     <div class="user__email">
       <i class="far fa-envelope"></i>
-      <a href="mailto:anton@example.com">anton@example.com</a>
+      <a :href="'mailto:' + user.email">{{ user.email }}</a>
     </div>
     <div class="user__message">
       <img class="icon" src="../assets/icons/message.png" alt="message" />
@@ -19,7 +27,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

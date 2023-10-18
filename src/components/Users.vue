@@ -5,17 +5,33 @@
     </div>
 
     <div class="users__container">
-      <UserCard />
-      <UserCard />
-      <UserCard />
+      <UserCard :user="user" :key="user._id" v-for="user in users" />
     </div>
   </div>
 </template>
 
 <script>
 import UserCard from './UserCard.vue';
+import { mapState, mapActions } from 'vuex';
 
-export default { components: { UserCard } };
+export default {
+  methods: {
+    ...mapActions({
+      onGetUsers: 'users/onGetUsers',
+    }),
+  },
+  computed: {
+    ...mapState('users', {
+      users: (state) => state.users,
+    }),
+  },
+
+  mounted() {
+    this.onGetUsers();
+  },
+
+  components: { UserCard },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -32,7 +48,7 @@ h1 {
     display: flex;
     flex-direction: column;
 
-    gap: 20px;
+    gap: 25px;
     padding-inline: 25px;
   }
 }

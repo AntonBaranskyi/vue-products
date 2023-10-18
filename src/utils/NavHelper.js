@@ -1,7 +1,7 @@
 export const navArray = [
   {
     path: '/orders',
-    name: 'Приходи',
+    name: 'Orders',
   },
 
   {
@@ -10,7 +10,7 @@ export const navArray = [
   },
 
   {
-    path: '/',
+    path: '/main',
     name: 'Products',
   },
   {

@@ -1,6 +1,6 @@
 <template>
   <div class="order">
-    <p class="order__name">Дуже довго предовга назва групи</p>
+    <p class="order__name">{{ order.title }}</p>
 
     <div class="order__more">
       <div @click="isOpenModal = !isOpenModal" class="order__more-icon">
@@ -12,7 +12,7 @@
       </div>
 
       <div class="order__more-product">
-        <p>23</p>
+        <p>{{ order.products.length }}</p>
         <p>Products</p>
       </div>
     </div>
@@ -23,8 +23,8 @@
     </div>
 
     <div class="order__prices">
-      <p class="order__prices-dolar">2,500$</p>
-      <p class="order__prices-uan">250 000 50 UAN</p>
+      <p class="order__prices-dolar">{{ getTotalPrice(order, 'USD') }}$</p>
+      <p class="order__prices-uan">{{ getTotalPrice(order, 'UAH') }} UAH</p>
     </div>
 
     <img class="icon order__delete" src="../assets/bin.png" alt="delete" />
@@ -37,6 +37,27 @@ export default {
     return {
       isOpenModal: false,
     };
+  },
+
+  methods: {
+    getTotalPrice(order, currency) {
+      let totalPrice = 0;
+      for (const product of order.products) {
+        for (const price of product.price) {
+          if (price.symbol === currency) {
+            totalPrice += price.value;
+          }
+        }
+      }
+
+      return totalPrice;
+    },
+  },
+  props: {
+    order: {
+      type: Object,
+      required: true,
+    },
   },
 };
 </script>

@@ -5,10 +5,10 @@
 
     <div class="item__name-wrapper">
       <p class="item__name">
-        Gibabyte Technology X-58-USB3 (Socket 1366) 6 X-58-USB3
+        {{ product.title }}
       </p>
 
-      <p class="item__code">SN-12.3456789</p>
+      <p class="item__code">SN-{{ product.serialNumber }}</p>
     </div>
 
     <p class="item__ready">Свободен</p>
@@ -16,19 +16,23 @@
     <div class="item__date">
       <div class="item__date-wrapper">
         <span>C</span>
-        <p class="item__date-start">06/04/2017</p>
+        <p class="item__date-start">
+          {{ this.formatDate(product.guarantee.start) }}
+        </p>
       </div>
 
       <div class="item__date-wrapper">
         <span>По</span>
-        <p class="item__date-start">06/08/2025</p>
+        <p class="item__date-start">
+          {{ this.formatDate(product.guarantee.end) }}
+        </p>
       </div>
     </div>
     <p class="item__status">Новий</p>
 
     <div class="item__prices">
-      <p class="item__prices-dolar">2,500$</p>
-      <p class="item__prices-uan">250 000 50 UAN</p>
+      <p class="item__prices-dolar">{{ formatPrice(product, 'USD') }}</p>
+      <p class="item__prices-uan">{{ formatPrice(product, 'UAH') }}</p>
     </div>
 
     <p class="item__group-name">
@@ -42,8 +46,10 @@
     </p>
 
     <div class="item__date">
-      <p class="item__date-start">06/04/2017</p>
-      <p>06 /Sept / 2017</p>
+      <p class="item__date-start">
+        {{ this.formatDate(product.guarantee.start) }}
+      </p>
+      <p>{{ this.formatDate(product.guarantee.end) }}</p>
     </div>
 
     <img class="icon item__delete" src="../assets/bin.png" alt="delete" />
@@ -51,7 +57,33 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  methods: {
+    formatDate(isoDate) {
+      const date = new Date(isoDate);
+      const day = date.getUTCDate().toString().padStart(2, '0');
+      const month = (date.getUTCMonth() + 1).toString().padStart(2, '0');
+      const year = date.getUTCFullYear();
+
+      return `${month}/${day}/${year}`;
+    },
+
+    formatPrice(product, symbol) {
+      const price = product.price.find((p) => p.symbol === symbol);
+      if (price) {
+        return `${price.value} ${symbol}`;
+      }
+      return '';
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

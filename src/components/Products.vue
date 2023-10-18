@@ -1,19 +1,37 @@
 <template>
   <div class="products">
     <div class="products__container container">
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
-      <ProductItem />
+      <ProductItem
+        v-for="product in products"
+        :key="product._id"
+        :product="product"
+      />
     </div>
   </div>
 </template>
 
 <script>
 import ProductItem from './ProductItem.vue';
+import { mapState, mapActions } from 'vuex';
+
 export default {
+  mounted() {
+    console.log('MOUNT');
+    this.onGetProducts();
+  },
   components: {
     ProductItem,
+  },
+
+  computed: {
+    ...mapState('products', {
+      products: (state) => state.products,
+    }),
+  },
+  methods: {
+    ...mapActions({
+      onGetProducts: 'products/onGetProducts',
+    }),
   },
 };
 </script>
