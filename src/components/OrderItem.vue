@@ -1,9 +1,9 @@
 <template>
-  <div class="order">
+  <div class="order" :class="{ 'open-modal': isOpenModal }">
     <p class="order__name">{{ order.title }}</p>
 
     <div class="order__more">
-      <div @click="isOpenModal = !isOpenModal" class="order__more-icon">
+      <div @click="toggleModal" class="order__more-icon">
         <img
           src="../assets/icons/more.png"
           class="order__more-item icon"
@@ -28,6 +28,13 @@
     </div>
 
     <img class="icon order__delete" src="../assets/bin.png" alt="delete" />
+
+    <div class="modal" v-if="isOpenModal">
+      <div class="modal-content">
+        <!-- Вміст модалки -->
+        <button @click="isOpenModal = false">Закрити</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -51,6 +58,10 @@ export default {
       }
 
       return totalPrice;
+    },
+
+    toggleModal() {
+      this.isOpenModal = !this.isOpenModal;
     },
   },
   props: {
@@ -76,6 +87,10 @@ export default {
   padding-inline: 20px;
 
   border: 1px solid #e6e6e6;
+
+  &.open-modal {
+    width: 50%;
+  }
 
   &__more {
     display: flex;
@@ -117,5 +132,18 @@ export default {
   &__delete {
     cursor: pointer;
   }
+}
+.modal {
+  /* Стилі для модалки */
+  position: fixed;
+  top: 0;
+  right: 0; /* Розташування справа */
+  width: 70%; /* Змініть розмір, відповідно до потреб */
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
 }
 </style>

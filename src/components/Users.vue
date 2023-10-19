@@ -5,7 +5,14 @@
     </div>
 
     <div class="users__container">
-      <UserCard :user="user" :key="user._id" v-for="user in users" />
+      <div
+        v-if="usersLoading"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <div class="spinner-border" role="status"></div>
+      </div>
+
+      <UserCard v-else :user="user" :key="user._id" v-for="user in users" />
     </div>
   </div>
 </template>
@@ -13,6 +20,8 @@
 <script>
 import UserCard from './UserCard.vue';
 import { mapState, mapActions } from 'vuex';
+
+import Spinner from './Spinner.vue';
 
 export default {
   methods: {
@@ -23,6 +32,7 @@ export default {
   computed: {
     ...mapState('users', {
       users: (state) => state.users,
+      usersLoading: (state) => state.usersLoading,
     }),
   },
 

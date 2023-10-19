@@ -5,7 +5,19 @@
     </div>
 
     <div class="orders__container">
-      <OrderItem v-for="order in orders" :key="order._id" :order="order" />
+      <div
+        v-if="ordersLoading"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <div class="spinner-border" role="status"></div>
+      </div>
+
+      <OrderItem
+        v-else
+        v-for="order in orders"
+        :key="order._id"
+        :order="order"
+      />
     </div>
   </div>
 </template>
@@ -21,6 +33,7 @@ export default {
   computed: {
     ...mapState('orders', {
       orders: (state) => state.orders,
+      ordersLoading: (state) => state.ordersLoading,
     }),
   },
   methods: {

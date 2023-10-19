@@ -1,7 +1,15 @@
 <template>
   <div class="products">
     <div class="products__container container">
+      <div
+        v-if="productsLoading"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <div class="spinner-border" role="status"></div>
+      </div>
+
       <ProductItem
+        v-else
         v-for="product in products"
         :key="product._id"
         :product="product"
@@ -26,6 +34,7 @@ export default {
   computed: {
     ...mapState('products', {
       products: (state) => state.products,
+      productsLoading: (state) => state.productsLoading,
     }),
   },
   methods: {

@@ -25,17 +25,19 @@
           <p class="header__info-current">{{ currentTime }}</p>
         </div>
       </div>
+      <div class="header__current-users">USERS ONLINE : {{ userCount }}</div>
     </div>
   </header>
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 export default {
   created() {
     this.updateDateTime();
     setInterval(this.updateDateTime, 60000);
   },
+
   data() {
     return {
       count: 0,
@@ -48,9 +50,14 @@ export default {
   computed: {
     ...mapState({
       isAuth: (state) => state.auth.isAuth,
+      userCount: (state) => state.users.userCount,
     }),
   },
   methods: {
+    ...mapActions({
+      onChangeCount: 'users/onChangeCount',
+    }),
+
     getCurrentDate() {
       const now = new Date();
       return now.toLocaleDateString(undefined, { weekday: 'long' });
@@ -121,6 +128,10 @@ export default {
   &__icon {
     width: 24px;
     height: 24px;
+  }
+
+  &__current-user {
+    align-items: center;
   }
 }
 </style>

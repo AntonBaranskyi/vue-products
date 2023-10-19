@@ -3,6 +3,7 @@ import { fetchUsers } from '../api/authAPI';
 export const usersModule = {
   state: () => ({
     users: [],
+    userCount: 0,
     usersLoading: false,
   }),
 
@@ -15,6 +16,10 @@ export const usersModule = {
     setLoading(state, bool) {
       state.usersLoading = bool;
     },
+
+    setUserCount(state, count) {
+      state.userCount = count;
+    },
   },
   actions: {
     onGetUsers({ commit }) {
@@ -26,6 +31,10 @@ export const usersModule = {
         .finally(() => {
           commit('setLoading', false);
         });
+    },
+
+    onChangeCount({ commit }, count) {
+      commit('setUserCount', count);
     },
   },
   namespaced: true,

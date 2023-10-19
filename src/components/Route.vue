@@ -2,7 +2,7 @@
   <div class="products">
     <div class="container">
       <div class="products__info products__info-align">
-        <h1 class="products__title title">Products / 25</h1>
+        <h1 class="products__title title">Products / {{ products.length }}</h1>
         <FilterProducts />
       </div>
     </div>
@@ -14,8 +14,14 @@
 <script>
 import FilterProducts from './FilterProducts.vue';
 import Products from './Products.vue';
+import { mapState } from 'vuex';
 
 export default {
+  computed: {
+    ...mapState('products', {
+      products: (state) => state.products,
+    }),
+  },
   components: {
     FilterProducts,
     Products,
