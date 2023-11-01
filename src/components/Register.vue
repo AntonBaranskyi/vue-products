@@ -31,7 +31,6 @@
               class="wrapper__input input"
               type="text"
               v-model="password"
-              
             />
           </div>
 
@@ -85,7 +84,7 @@ export default {
       onSendSignUp: 'auth/onSendSignUp',
     }),
 
-    sendSignUp() {
+    async sendSignUp() {
       const objToSend = {
         fullName: this.fullName,
         email: this.email,
@@ -96,7 +95,10 @@ export default {
         objToSend.avatarUrl = this.avatarUrl;
       }
 
-      this.onSendSignUp(objToSend);
+      const result = await this.onSendSignUp(objToSend);
+
+      console.log(result);
+      localStorage.setItem('token', result.token);
 
       this.fullName = '';
       this.email = '';

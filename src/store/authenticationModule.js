@@ -46,17 +46,18 @@ export const authenticationModule = {
       }
     },
 
-    onSendSignUp({ commit }, data) {
-      commit('setSignUpError', false);
+    async onSendSignUp({ commit }, data) {
+      try {
+        commit('setSignUpError', false);
 
-      fetchRegister(data)
-        .then((answ) => {
-          commit('setUserData', answ);
-          commit('setIsAuth', true);
-        })
-        .catch(() => {
-          commit('setSignUpError', true);
-        });
+        const answ = await fetchRegister(data);
+        commit('setUserData', answ);
+        commit('setIsAuth', true);
+
+        return answ;
+      } catch (error) {
+        commit('setSignUpError', true);
+      }
     },
   },
   namespaced: true,
