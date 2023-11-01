@@ -9,7 +9,7 @@
             <p>Full name: (*)</p>
             <input
               placeholder="Write your full name"
-              class="wrapper__input"
+              class="wrapper__input input"
               type="text"
               v-model="fullName"
             />
@@ -18,7 +18,7 @@
             <p>Email: (*)</p>
             <input
               placeholder="Write your email"
-              class="wrapper__input"
+              class="wrapper__input input"
               type="text"
               v-model="email"
             />
@@ -28,9 +28,10 @@
             <p>Password (*)</p>
             <input
               placeholder="Write your password"
-              class="wrapper__input"
+              class="wrapper__input input"
               type="text"
               v-model="password"
+              
             />
           </div>
 
@@ -39,7 +40,7 @@
               >Choose your profile image</label
             >
             <input
-              class="form-control wrapper__input"
+              class="form-control wrapper__input input"
               type="file"
               id="formFile"
               @change="handleChangeFile"
@@ -155,4 +156,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/auth.scss';
+@import '../styles/input.scss';
 </style>

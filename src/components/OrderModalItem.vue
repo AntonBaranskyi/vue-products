@@ -6,16 +6,23 @@
     <div class="item__name-wrapper">
       <p class="item__name">
         {{ activeOrder.title }}
-        sdfd
       </p>
 
       <p class="item__code">SN-{{ activeOrder.serialNumber }}</p>
     </div>
 
-    <p class="item__ready">Свободен</p>
+    <p
+      class="item__ready"
+      :class="{
+        'text-success': activeOrder.isNew === 1,
+        'text-danger': activeOrder.isNew !== 1,
+      }"
+    >
+      {{ activeOrder.isNew === 1 ? 'Свободен' : 'Занят' }}
+    </p>
 
     <img
-      @click="onDeleteProduct(activeOrder._id)"
+      @click="handleDeleteProduct"
       class="icon item__delete"
       src="../assets/bin.png"
       alt="delete"
@@ -52,6 +59,16 @@ export default {
     ...mapActions({
       onDeleteProduct: 'products/onDeleteProduct',
     }),
+
+    ...mapActions({
+      onDeleteActiveProduct: 'orders/onDeleteActiveProduct',
+    }),
+
+    handleDeleteProduct() {
+      this.onDeleteProduct(this.activeOrder._id);
+
+      this.onDeleteActiveProduct(this.activeOrder._id);
+    },
   },
 };
 </script>

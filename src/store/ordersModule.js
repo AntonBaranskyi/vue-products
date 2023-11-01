@@ -56,6 +56,16 @@ export const ordersModule = {
     onAddNewOrder(state, order) {
       state.orders = [...state.orders, order];
     },
+
+    onAddNewActiveProducts(state, product) {
+      state.orderActive.products = [...state.orderActive.products, product];
+    },
+
+    onDeleteActiveOrderProduct(state, id) {
+      state.orderActive.products = state.orderActive.products.filter(
+        (item) => item._id !== id
+      );
+    },
   },
 
   actions: {
@@ -111,6 +121,15 @@ export const ordersModule = {
 
     onPutActiveOrder({ commit }, data) {
       commit('setAciveOrder', data);
+    },
+
+    onAddActiveProducts({ commit }, product) {
+      console.log(product);
+      commit('onAddNewActiveProducts', product);
+    },
+
+    onDeleteActiveProduct({ commit }, id) {
+      commit('onDeleteActiveOrderProduct', id);
     },
   },
 

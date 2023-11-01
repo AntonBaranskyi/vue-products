@@ -11,7 +11,15 @@
       <p class="item__code">SN-{{ product.serialNumber }}</p>
     </div>
 
-    <p class="item__ready">Свободен</p>
+    <p
+      class="item__ready"
+      :class="{
+        'text-success': product.isNew === 1,
+        'text-danger': product.isNew !== 1,
+      }"
+    >
+      {{ product.isNew === 1 ? 'Свободен' : 'Занят' }}
+    </p>
 
     <div class="item__date">
       <div class="item__date-wrapper">

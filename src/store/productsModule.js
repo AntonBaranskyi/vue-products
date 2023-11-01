@@ -1,11 +1,13 @@
 import { fetchProducts } from '../api/authAPI';
-import { deleteProduct } from '../api/productsAPI';
+import { addProduct, deleteProduct } from '../api/productsAPI';
 
 export const productsModule = {
   state: () => ({
     products: [],
     productsLoading: false,
     loadingIds: [],
+    addProductError: '',
+    addedProduct: null,
   }),
 
   getters: {},
@@ -28,6 +30,21 @@ export const productsModule = {
 
     clearLoading(state) {
       state.loadingIds = [];
+    },
+
+    onAddNewProduct(state, product) {
+      state.products = [...state.products, product];
+    },
+
+    onSetError(state) {
+      state.addProductError = 'Cannot add Product';
+    },
+    setAddedProduct(state, product) {
+      state.addedProduct = product;
+    },
+
+    onClearAddedProduct(state) {
+      state.addedProduct = null;
     },
   },
 
@@ -54,6 +71,18 @@ export const productsModule = {
         .finally(() => {
           commit('clearLoading');
         });
+    },
+
+    async onAddProduct({ commit }, data) {
+      try {
+        const answ = await addProduct(data);
+        commit('onAddNewProduct', answ);
+        commit('setAddedProduct', answ);
+        return answ;
+      } catch (error) {
+        commit('onSetError');
+        throw error;
+      }
     },
   },
 

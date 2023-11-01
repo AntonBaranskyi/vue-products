@@ -1,9 +1,15 @@
 <template>
+  <AddProduct v-model:productAddModal="productAddModal" />
   <div class="order-modal shadow-sm">
     <div class="order-modal__info">
       <div class="orders-modal__add">
         <p>Add product</p>
-        <img class="icon icon-md" src="../assets/icons/add.png" alt="Add" />
+        <img
+          @click="productAddModal = !productAddModal"
+          class="icon icon-md"
+          src="../assets/icons/add.png"
+          alt="Add"
+        />
       </div>
       <h2 class="order-modal__title">{{ orderActive.title }}</h2>
 
@@ -29,7 +35,13 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import OrderModalItem from './OrderModalItem.vue';
+import AddProduct from './AddProduct.vue';
 export default {
+  data() {
+    return {
+      productAddModal: false,
+    };
+  },
   computed: {
     ...mapState('orders', {
       orderActive: (state) => state.orderActive,
@@ -45,13 +57,13 @@ export default {
       this.onPutActiveOrder(null);
     },
   },
-  components: { OrderModalItem },
+  components: { OrderModalItem, AddProduct },
 };
 </script>
 
 <style lang="scss" scoped>
 .order-modal {
-  position: relative;
+  /* position: relative; */
   display: flex;
   flex-direction: column;
 
@@ -62,6 +74,8 @@ export default {
   background-color: white;
 
   gap: 15px;
+
+  width: 600px;
 
   &__info {
     display: flex;

@@ -10,7 +10,7 @@
             <input
               v-model="email"
               placeholder="Please write your email"
-              class="wrapper__input"
+              class="wrapper__input input"
               type="email"
             />
           </div>
@@ -20,7 +20,7 @@
             <input
               v-model="password"
               placeholder="Please write your password"
-              class="wrapper__input"
+              class="wrapper__input input"
               type="password"
             />
           </div>
@@ -121,4 +121,5 @@ export default {
 
 <style lang="scss" scoped>
 @import '../styles/auth.scss';
+@import '../styles/input.scss';
 </style>
