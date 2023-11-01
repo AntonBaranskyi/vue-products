@@ -4,6 +4,7 @@ import SocketioService from './services/socketio.server.js';
 import Header from './components/Header.vue';
 
 import { io } from 'socket.io-client';
+import router from './router/router';
 
 export default {
   data() {
@@ -18,6 +19,7 @@ export default {
   methods: {
     ...mapActions({
       onChangeCount: 'users/onChangeCount',
+      onChangeIsAuth: 'auth/onChangeIsAuth',
     }),
   },
   created() {
@@ -27,6 +29,16 @@ export default {
       console.log(data);
       this.onChangeCount(data);
     });
+  },
+
+  mounted() {
+    const isAuth = localStorage.getItem('token');
+
+    if (isAuth) {
+      this.onChangeIsAuth(true);
+    } else {
+      router.push('/');
+    }
   },
 };
 </script>

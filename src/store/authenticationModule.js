@@ -27,17 +27,23 @@ export const authenticationModule = {
     },
   },
   actions: {
-    onSendLogin({ commit }, data) {
-      commit('setLogginError', false);
-      console.log(data);
-      fetchLogin(data)
-        .then((answ) => {
-          commit('setUserData', answ);
-          commit('setIsAuth', true);
-        })
-        .catch(() => {
-          commit('setLogginError', true);
-        });
+    onChangeIsAuth({ commit }, bool) {
+      commit('setIsAuth', bool);
+    },
+    async onSendLogin({ commit }, data) {
+      try {
+        commit('setLogginError', false);
+
+        const answ = await fetchLogin(data);
+        console.log(data);
+
+        commit('setUserData', answ);
+        commit('setIsAuth', true);
+
+        return answ;
+      } catch (error) {
+        commit('setLogginError', true);
+      }
     },
 
     onSendSignUp({ commit }, data) {

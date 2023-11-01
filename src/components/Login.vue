@@ -66,26 +66,20 @@ export default {
     }),
   },
 
-  // setup() {
-  //   const isAuth = ref(false);
-  //   // Використовуйте watchEffect для реакції на зміни isAuth
-  //   watchEffect(() => {
-  //     if (isAuth) {
-  //       router.push('/main');
-  //     }
-  //   });
-  // },
   methods: {
     ...mapActions({
       onSendLogin: 'auth/onSendLogin',
     }),
-    sendLoading() {
+    async sendLoading() {
       const objToSend = {
         email: this.email,
         password: this.password,
       };
 
-      this.onSendLogin(objToSend);
+      const responce = await this.onSendLogin(objToSend);
+
+      localStorage.setItem('token', responce.token);
+      console.log(responce);
 
       this.email = '';
       this.password = '';
