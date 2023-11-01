@@ -52,6 +52,8 @@ export default {
       default: false,
     },
   },
+
+ 
   methods: {
     ...mapActions({
       onAddOrder: 'orders/onAddOrder',

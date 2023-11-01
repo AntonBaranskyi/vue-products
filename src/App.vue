@@ -20,6 +20,7 @@ export default {
     ...mapActions({
       onChangeCount: 'users/onChangeCount',
       onChangeIsAuth: 'auth/onChangeIsAuth',
+      onChangeUserData: 'auth/onChangeUserData',
     }),
   },
   created() {
@@ -31,10 +32,12 @@ export default {
     });
   },
 
-  mounted() {
-    const isAuth = localStorage.getItem('token');
+  async mounted() {
+    const isAuthData = await this.onChangeUserData();
 
-    if (isAuth) {
+    this.onChangeUserData(isAuthData);
+
+    if (isAuthData) {
       this.onChangeIsAuth(true);
     } else {
       router.push('/');

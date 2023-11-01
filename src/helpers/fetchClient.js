@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-axios.defaults.baseURL = 'https://vue-products-server.onrender.com';
+import axios from '../helpers/axios';
 
 const wait = (delay) => {
   return new Promise((resolve) => {

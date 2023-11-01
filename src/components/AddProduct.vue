@@ -90,6 +90,10 @@ export default {
     ...mapState('products', {
       addedProduct: (state) => state.addedProduct,
     }),
+
+    ...mapState({
+      userData: (state) => state.auth.userData,
+    }),
   },
 
   methods: {
@@ -118,6 +122,7 @@ export default {
           value: this.productPrice,
         },
         order: this.orderActive.id,
+        userId: this.userData._id,
       };
 
       const addedProduct = await this.onAddProduct(objToSend);

@@ -23,3 +23,7 @@ export const fetchOrders = () => {
 export const uploadPhoto = (data) => {
   return client.post('/upload', data);
 };
+
+export const checkMe = () => {
+  return client.get('/me');
+};

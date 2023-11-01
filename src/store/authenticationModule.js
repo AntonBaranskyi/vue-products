@@ -1,4 +1,4 @@
-import { fetchLogin, fetchRegister } from '../api/authAPI';
+import { checkMe, fetchLogin, fetchRegister } from '../api/authAPI';
 
 export const authenticationModule = {
   state: () => ({
@@ -27,6 +27,18 @@ export const authenticationModule = {
     },
   },
   actions: {
+    async onChangeUserData({ commit }) {
+      try {
+        const responce = await checkMe();
+
+        commit('setUserData', responce);
+
+        return responce;
+      } catch (error) {
+        commit('setLogginError', true);
+      }
+    },
+
     onChangeIsAuth({ commit }, bool) {
       commit('setIsAuth', bool);
     },
