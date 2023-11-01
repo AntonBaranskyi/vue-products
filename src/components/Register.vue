@@ -42,6 +42,7 @@
               class="form-control wrapper__input"
               type="file"
               id="formFile"
+              @change="handleChangeFile"
             />
           </div>
         </form>
@@ -54,7 +55,7 @@
           Register
         </button>
 
-        <RouterLink to="login" type="submit" class="wrapper__register">
+        <RouterLink to="/" type="submit" class="wrapper__register">
           Back to login
         </RouterLink>
       </div>
@@ -74,7 +75,7 @@ export default {
       fullName: '',
       email: '',
       password: '',
-      avatarUrl: '',
+      avatarUrl: null,
     };
   },
 
@@ -101,6 +102,25 @@ export default {
       this.password = '';
       this.avatarUrl = '';
     },
+
+    // async handleChangeFile(event) {
+    //   try {
+    //     const formData = new FormData();
+    //     const file = event.target.files[0];
+    //     formData.append('image', file);
+    //     const responce = await axios.post(
+    //       'http://localhost:4000/upload',
+    //       formData
+    //     );
+    //     this.avatarUrl = responce.data.url;
+    //     this.$forceUpdate();
+    //     console.log(this.avatarUrl);
+    //   } catch (error) {
+    //     console.log('ERRROR');
+    //   }
+
+    //   console.log(event.target.files);
+    // },
   },
 
   computed: {

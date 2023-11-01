@@ -29,4 +29,5 @@ function request(url, method, data) {
 export const client = {
   get: (url) => request(url),
   post: (url, data) => request(url, 'POST', data),
+  delete: (url) => request(url, 'DELETE'),
 };

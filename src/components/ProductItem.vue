@@ -52,11 +52,23 @@
       <p>{{ this.formatDate(product.guarantee.end) }}</p>
     </div>
 
-    <img class="icon item__delete" src="../assets/bin.png" alt="delete" />
+    <img
+      @click="onDeleteProduct(product._id)"
+      class="icon item__delete"
+      src="../assets/bin.png"
+      alt="delete"
+    />
+
+    <div class="backdrop" v-if="loadingIds.includes(product._id)">
+      <div class="spinner-border spinner-position" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   props: {
     product: {
@@ -65,7 +77,16 @@ export default {
     },
   },
 
+  computed: {
+    ...mapState('products', {
+      loadingIds: (state) => state.loadingIds,
+    }),
+  },
   methods: {
+    ...mapActions({
+      onDeleteProduct: 'products/onDeleteProduct',
+    }),
+
     formatDate(isoDate) {
       const date = new Date(isoDate);
       const day = date.getUTCDate().toString().padStart(2, '0');
@@ -87,56 +108,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.item {
-  display: flex;
-  height: 120px;
-  align-items: center;
-  justify-content: space-between;
-
-  min-width: fit-content;
-  gap: 35px;
-
-  background-color: #fff;
-
-  padding-inline: 35px;
-
-  border-radius: 10px;
-
-  &__online {
-    flex: 0 0 auto;
-    width: 16px;
-    height: 16px;
-    background-color: green;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  &__photo {
-    width: 70px;
-    height: 70px;
-
-    object-fit: contain;
-  }
-
-  &__date-wrapper {
-    display: flex;
-    gap: 10px;
-  }
-
-  &__group-name {
-    text-overflow: ellipsis;
-  }
-
-  &:last-child {
-    margin-bottom: 20px;
-  }
-
-  &__delete {
-    cursor: pointer;
-  }
-}
+@import '../styles/orderItem.scss';
 .icon {
   width: 24px;
   height: 24px;
+}
+
+@import '../styles/backdrop.scss';
+.spinner-position {
+  position: absolute;
+  left: 50%;
 }
 </style>

@@ -95,6 +95,7 @@ export default {
   &__container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
 
   &__logo {

@@ -1,0 +1,53 @@
+.item {
+  position: relative;
+  display: flex;
+  height: 120px;
+  align-items: center;
+  justify-content: space-between;
+
+  min-width: fit-content;
+  gap: 35px;
+
+  background-color: #fff;
+
+  padding-inline: 35px;
+
+  border-radius: 10px;
+
+  &-height {
+    height: 80px;
+  }
+
+  &__online {
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    background-color: green;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  &__photo {
+    width: 70px;
+    height: 70px;
+
+    object-fit: contain;
+  }
+
+  &__date-wrapper {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__group-name {
+    text-overflow: ellipsis;
+  }
+
+  &:last-child {
+    margin-bottom: 20px;
+  }
+
+  &__delete {
+    cursor: pointer;
+  }
+}

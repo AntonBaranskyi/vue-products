@@ -1,5 +1,5 @@
 <template>
-  <div class="order" :class="{ 'open-modal': isOpenModal }">
+  <div class="order">
     <p class="order__name">{{ order.title }}</p>
 
     <div class="order__more">
@@ -27,26 +27,43 @@
       <p class="order__prices-uan">{{ getTotalPrice(order, 'UAH') }} UAH</p>
     </div>
 
-    <img class="icon order__delete" src="../assets/bin.png" alt="delete" />
+    <img
+      @click="onDeleteOrder(order._id)"
+      class="icon order__delete"
+      src="../assets/bin.png"
+      alt="delete"
+    />
 
-    <div class="modal" v-if="isOpenModal">
-      <div class="modal-content">
-        <!-- Вміст модалки -->
-        <button @click="isOpenModal = false">Закрити</button>
+    <div class="backdrop" v-if="loadingIds.includes(order._id)">
+      <div class="spinner-border spinner-position" role="status">
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 export default {
   data() {
     return {
       isOpenModal: false,
+      isDeletedLoading: false,
     };
   },
 
+  computed: {
+    ...mapState('orders', {
+      loadingIds: (state) => state.loadingIds,
+    }),
+  },
   methods: {
+    ...mapActions({
+      onOpenOrder: 'orders/onOpenOrder',
+      onPutActiveOrder: 'orders/onPutActiveOrder',
+      onGetOrders: 'orders/onGetOrders',
+      onDeleteOrder: 'orders/onDeleteOrder',
+    }),
     getTotalPrice(order, currency) {
       let totalPrice = 0;
       for (const product of order.products) {
@@ -62,6 +79,9 @@ export default {
 
     toggleModal() {
       this.isOpenModal = !this.isOpenModal;
+      this.onOpenOrder(this.isOpenModal);
+
+      this.onPutActiveOrder(this.order);
     },
   },
   props: {
@@ -75,6 +95,8 @@ export default {
 
 <style lang="scss" scoped>
 .order {
+  position: relative;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -102,8 +124,8 @@ export default {
       border: 1px solid lightgray;
       height: 42px;
       width: 42px;
-      border-radius: 50%; /* Зробити контейнер круглим */
-      overflow: hidden; /* Відсікти круглу форму на вмісті контейнера */
+      border-radius: 50%;
+      overflow: hidden;
 
       cursor: pointer;
     }
@@ -124,26 +146,11 @@ export default {
     }
   }
 
-  .icon {
-    width: 25px;
-    height: 25px;
-  }
+  @import '../styles/icon.scss';
+  @import '../styles/backdrop.scss';
 
   &__delete {
     cursor: pointer;
   }
-}
-.modal {
-  /* Стилі для модалки */
-  position: fixed;
-  top: 0;
-  right: 0; /* Розташування справа */
-  width: 70%; /* Змініть розмір, відповідно до потреб */
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
 }
 </style>

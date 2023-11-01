@@ -19,3 +19,7 @@ export const fetchProducts = () => {
 export const fetchOrders = () => {
   return client.get('/orders');
 };
+
+export const uploadPhoto = (data) => {
+  return client.post('/upload', data);
+};
