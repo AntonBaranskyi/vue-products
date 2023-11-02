@@ -3,7 +3,7 @@
     <div class="user__photo">
       <img
         v-if="user.avatarUrl"
-        :src="user.avatarUrl"
+        :src="`https://vue-products-server.onrender.com${user.avatarUrl}`"
         alt="photo"
         class="user__photo-item"
       />
@@ -53,7 +53,7 @@ export default {
       width: 100px;
       height: 100px;
       border-radius: 50%;
-      object-fit: cover;
+      object-fit: contain;
     }
   }
   .user__name {
