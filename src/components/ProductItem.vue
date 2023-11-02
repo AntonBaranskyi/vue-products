@@ -44,14 +44,10 @@
     </div>
 
     <p class="item__group-name">
-      Дуже довго предовга дуже прям дуже дуже дуже велика назва групи
+      {{ product.orders[0].title }}
     </p>
 
     <p class="item__owner">{{ product.user.fullName }}</p>
-
-    <p class="item__group-name">
-      Дуже довго предовга дуже прям дуже дуже дуже велика назва прихода
-    </p>
 
     <div class="item__date">
       <p class="item__date-start">
@@ -88,6 +84,10 @@ export default {
   computed: {
     ...mapState('products', {
       loadingIds: (state) => state.loadingIds,
+    }),
+
+    ...mapState('orders', {
+      orders: (state) => state.orders,
     }),
   },
   methods: {

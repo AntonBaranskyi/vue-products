@@ -7,20 +7,25 @@
       >
         <div class="spinner-border" role="status"></div>
       </div>
-
-      <ProductItem
-        v-else
-        v-for="product in products"
-        :key="product._id"
-        :product="product"
-      />
+      <div v-else>
+        <template v-if="sortedAndSearchedProducts.length > 0">
+          <ProductItem
+            v-for="product in sortedAndSearchedProducts"
+            :key="product._id"
+            :product="product"
+          />
+        </template>
+        <template v-else>
+          <p>No products found.</p>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ProductItem from './ProductItem.vue';
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions, mapGetters } from 'vuex';
 
 export default {
   mounted() {
@@ -35,6 +40,11 @@ export default {
     ...mapState('products', {
       products: (state) => state.products,
       productsLoading: (state) => state.productsLoading,
+    }),
+
+    ...mapGetters({
+      sortedProducts: 'products/sortedProducts',
+      sortedAndSearchedProducts: 'products/sortedAndSearchedProducts',
     }),
   },
   methods: {

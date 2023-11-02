@@ -8,9 +8,31 @@ export const productsModule = {
     loadingIds: [],
     addProductError: '',
     addedProduct: null,
+    searchQuery: '',
+    selectedSort: '',
   }),
 
-  getters: {},
+  getters: {
+    sortedProducts(state) {
+      if (state.selectedSort) {
+        return state.products.filter(
+          (product) => product.orders[0].title === state.selectedSort
+        );
+      }
+
+      return state.products;
+    },
+
+    sortedAndSearchedProducts(state, getters) {
+      if (state.searchQuery) {
+        return getters.sortedProducts.filter((product) =>
+          product.title.toLowerCase().includes(state.searchQuery.toLowerCase())
+        );
+      }
+
+      return getters.sortedProducts;
+    },
+  },
   mutations: {
     setProducts(state, data) {
       state.products = [...data];
@@ -18,6 +40,14 @@ export const productsModule = {
 
     setLoading(state, bool) {
       state.productsLoading = bool;
+    },
+
+    setSearchQuery(state, searchQuery) {
+      state.searchQuery = searchQuery;
+    },
+
+    setSelectedSort(state, selectedSort) {
+      state.selectedSort = selectedSort;
     },
 
     setLoadingIds(state, id) {
@@ -49,6 +79,14 @@ export const productsModule = {
   },
 
   actions: {
+    onChangeSearchQuery({ commit }, term) {
+      commit('setSearchQuery', term);
+    },
+
+    onChangeSortQuery({ commit }, term) {
+      commit('setSelectedSort', term);
+    },
+
     onGetProducts({ commit }) {
       commit('setLoading', true);
 
