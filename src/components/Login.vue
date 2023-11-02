@@ -45,10 +45,7 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 
-import { watchEffect } from 'vue';
-
 import { toast } from 'vue3-toastify';
-import router from '../router/router';
 
 export default {
   data() {

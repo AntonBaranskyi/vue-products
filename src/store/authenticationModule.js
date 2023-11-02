@@ -35,7 +35,8 @@ export const authenticationModule = {
 
         return responce;
       } catch (error) {
-        commit('setLogginError', true);
+        // commit('setLogginError', true);
+        console.log(error);
       }
     },
 
