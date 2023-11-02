@@ -90,6 +90,10 @@ export default {
       required: true,
     },
   },
+
+  mounted() {
+    this.isOpenModal = false;
+  },
 };
 </script>
 

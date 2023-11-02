@@ -104,6 +104,8 @@ export default {
   opacity: 0.6;
 
   object-fit: cover;
+
+  border-radius: 50%;
 }
 
 .nav {
