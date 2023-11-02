@@ -25,10 +25,15 @@ export default {
   },
   created() {
     const soket = io('https://vue-products-server.onrender.com');
+    // const soket = io('http://localhost:8000');
 
     soket.on('userCount', (data) => {
       console.log(data);
       this.onChangeCount(data);
+    });
+
+    soket.on('disconnect', () => {
+      console.log('User disconnected');
     });
   },
 

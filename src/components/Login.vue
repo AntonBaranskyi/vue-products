@@ -37,9 +37,9 @@
           </div>
 
           <button
-            @click.prevent="sendLoading"
             type="submit"
             class="wrapper__submit"
+            @click.prevent="sendLoading"
             :disabled="hasErrors"
           >
             Log In
@@ -56,7 +56,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
-
 import { toast } from 'vue3-toastify';
 
 export default {
@@ -64,13 +63,10 @@ export default {
     return {
       email: '',
       password: '',
-      loginSuccess: false,
-
       touched: {
         email: false,
         password: false,
       },
-
       errors: {
         email: '',
         password: '',
@@ -83,7 +79,6 @@ export default {
       isAuth: (state) => state.isAuth,
       logginError: (state) => state.logginError,
     }),
-
     hasErrors() {
       return !!(this.errors.email || this.errors.password);
     },
@@ -93,19 +88,27 @@ export default {
     ...mapActions({
       onSendLogin: 'auth/onSendLogin',
     }),
+
     async sendLoading() {
+      this.validateEmail();
+      this.validatePassword();
+
+      if (this.hasErrors) {
+        return;
+      }
+
       const objToSend = {
         email: this.email,
         password: this.password,
       };
 
-      const responce = await this.onSendLogin(objToSend);
+      const response = await this.onSendLogin(objToSend);
 
-      localStorage.setItem('token', responce.token);
-      console.log(responce);
-
-      this.email = '';
-      this.password = '';
+      if (response) {
+        localStorage.setItem('token', response.token);
+        this.email = '';
+        this.password = '';
+      }
     },
 
     validateEmail() {
@@ -129,7 +132,7 @@ export default {
   watch: {
     isAuth(newValue) {
       if (newValue) {
-        toast.success('Loggin was successful', {
+        toast.success('Log in was successful', {
           autoClose: 1000,
           onClose: () => {
             this.$router.push('/main');
@@ -137,16 +140,12 @@ export default {
         });
       }
     },
+
     logginError(newValue) {
       if (newValue) {
         toast.error('Invalid login or password', {
           autoClose: 1000,
         });
-      }
-    },
-    loginSuccess(newValue) {
-      if (newValue) {
-        this.$router.push('/main');
       }
     },
   },

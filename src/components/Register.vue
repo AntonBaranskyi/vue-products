@@ -88,6 +88,8 @@ import { toast } from 'vue3-toastify';
 
 import router from '../router/router';
 
+import axios from '../helpers/axios';
+
 export default {
   data() {
     return {
@@ -160,6 +162,23 @@ export default {
       this.email = '';
       this.password = '';
       this.avatarUrl = '';
+    },
+
+    async handleChangeFile(event) {
+      try {
+        const formData = new FormData();
+        const file = event.target.files[0];
+        formData.append('image', file);
+        const response = await axios.post(
+          'http://localhost:8000/upload',
+          formData
+        );
+        this.avatarUrl = response.data.url;
+        this.$forceUpdate();
+        console.log(this.avatarUrl);
+      } catch (error) {
+        console.log('Помилка завантаження фото' + error);
+      }
     },
   },
 

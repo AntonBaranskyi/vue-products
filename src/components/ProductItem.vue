@@ -36,7 +36,7 @@
         </p>
       </div>
     </div>
-    <p class="item__status">Новий</p>
+    <p class="item__status">New</p>
 
     <div class="item__prices">
       <p class="item__prices-dolar">{{ formatPrice(product, 'USD') }}</p>
@@ -53,7 +53,6 @@
       <p class="item__date-start">
         {{ this.formatDate(product.guarantee.start) }}
       </p>
-      <p>{{ this.formatDate(product.guarantee.end) }}</p>
     </div>
 
     <img

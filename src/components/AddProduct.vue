@@ -27,6 +27,7 @@
               placeholder="Write product title "
               class="input"
               v-model="productTitle"
+              maxlength="25"
             />
           </div>
 
@@ -35,7 +36,7 @@
             <input
               type="number"
               v-model="productPrice"
-              min="100"
+              min="0"
               max="5000"
               placeholder="Choose product price "
               class="input"
@@ -50,8 +51,8 @@
               aria-label="Default select example"
             >
               <option value="" disabled selected>Choose status</option>
-              <option value="1">Свободен</option>
-              <option value="2">Занят</option>
+              <option value="1">Free</option>
+              <option value="2">Engaged</option>
             </select>
           </div>
         </div>
