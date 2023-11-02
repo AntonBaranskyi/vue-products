@@ -12,7 +12,14 @@
               class="wrapper__input input"
               type="text"
               v-model="fullName"
+              @blur="validateFullName"
             />
+            <p
+              v-if="touched.fullName && errors.fullName"
+              class="text text-danger"
+            >
+              {{ errors.fullName }}
+            </p>
           </div>
           <div class="wrapper__input-wrapper">
             <p>Email: (*)</p>
@@ -21,7 +28,11 @@
               class="wrapper__input input"
               type="text"
               v-model="email"
+              @blur="validateEmail"
             />
+            <p v-if="touched.email && errors.email" class="text text-danger">
+              {{ errors.email }}
+            </p>
           </div>
 
           <div class="wrapper__input-wrapper">
@@ -31,7 +42,14 @@
               class="wrapper__input input"
               type="text"
               v-model="password"
+              @blur="validatePassword"
             />
+            <p
+              v-if="touched.password && errors.password"
+              class="text text-danger"
+            >
+              {{ errors.password }}
+            </p>
           </div>
 
           <div class="mb-3 wrapper__input-wrapper">
@@ -51,6 +69,7 @@
           @click.prevent="sendSignUp"
           type="submit"
           class="wrapper__submit"
+          :disabled="hasErrors"
         >
           Register
         </button>
@@ -76,10 +95,47 @@ export default {
       email: '',
       password: '',
       avatarUrl: null,
+
+      touched: {
+        fullName: false,
+        email: false,
+        password: false,
+      },
+
+      errors: {
+        fullName: '',
+        email: '',
+        password: '',
+      },
     };
   },
 
   methods: {
+    validateFullName() {
+      this.touched.fullName = true;
+      this.errors.fullName =
+        this.fullName && this.fullName.length >= 3
+          ? ''
+          : 'Full name is required.';
+    },
+
+    validateEmail() {
+      this.touched.email = true;
+      if (this.email) {
+        const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        this.errors.email = emailPattern.test(this.email)
+          ? ''
+          : 'Invalid email format.';
+      } else {
+        this.errors.email = 'Email is required.';
+      }
+    },
+
+    validatePassword() {
+      this.touched.password = true;
+      this.errors.password = this.password ? '' : 'Password is required.';
+    },
+
     ...mapActions({
       onSendSignUp: 'auth/onSendSignUp',
     }),
@@ -105,25 +161,6 @@ export default {
       this.password = '';
       this.avatarUrl = '';
     },
-
-    // async handleChangeFile(event) {
-    //   try {
-    //     const formData = new FormData();
-    //     const file = event.target.files[0];
-    //     formData.append('image', file);
-    //     const responce = await axios.post(
-    //       'http://localhost:4000/upload',
-    //       formData
-    //     );
-    //     this.avatarUrl = responce.data.url;
-    //     this.$forceUpdate();
-    //     console.log(this.avatarUrl);
-    //   } catch (error) {
-    //     console.log('ERRROR');
-    //   }
-
-    //   console.log(event.target.files);
-    // },
   },
 
   computed: {
@@ -131,6 +168,14 @@ export default {
       isAuth: (state) => state.auth.isAuth,
       signUpError: (state) => state.auth.logginError,
     }),
+
+    hasErrors() {
+      return !!(
+        this.errors.email ||
+        this.errors.fullName ||
+        this.errors.password
+      );
+    },
   },
 
   watch: {

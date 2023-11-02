@@ -12,7 +12,11 @@
               placeholder="Please write your email"
               class="wrapper__input input"
               type="email"
+              @blur="validateEmail"
             />
+            <p v-if="touched.email && errors.email" class="text text-danger">
+              {{ errors.email }}
+            </p>
           </div>
 
           <div class="wrapper__input-wrapper">
@@ -22,13 +26,21 @@
               placeholder="Please write your password"
               class="wrapper__input input"
               type="password"
+              @blur="validatePassword"
             />
+            <p
+              v-if="touched.password && errors.password"
+              class="text text-danger"
+            >
+              {{ errors.password }}
+            </p>
           </div>
 
           <button
             @click.prevent="sendLoading"
             type="submit"
             class="wrapper__submit"
+            :disabled="hasErrors"
           >
             Log In
           </button>
@@ -53,6 +65,16 @@ export default {
       email: '',
       password: '',
       loginSuccess: false,
+
+      touched: {
+        email: false,
+        password: false,
+      },
+
+      errors: {
+        email: '',
+        password: '',
+      },
     };
   },
 
@@ -61,6 +83,10 @@ export default {
       isAuth: (state) => state.isAuth,
       logginError: (state) => state.logginError,
     }),
+
+    hasErrors() {
+      return !!(this.errors.email || this.errors.password);
+    },
   },
 
   methods: {
@@ -80,6 +106,23 @@ export default {
 
       this.email = '';
       this.password = '';
+    },
+
+    validateEmail() {
+      this.touched.email = true;
+      if (this.email) {
+        const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        this.errors.email = emailPattern.test(this.email)
+          ? ''
+          : 'Invalid email format.';
+      } else {
+        this.errors.email = 'Email is required.';
+      }
+    },
+
+    validatePassword() {
+      this.touched.password = true;
+      this.errors.password = this.password ? '' : 'Password is required.';
     },
   },
 

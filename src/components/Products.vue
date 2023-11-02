@@ -8,13 +8,13 @@
         <div class="spinner-border" role="status"></div>
       </div>
       <div v-else>
-        <template v-if="sortedAndSearchedProducts.length > 0">
+        <div class="flex" v-if="sortedAndSearchedProducts.length > 0">
           <ProductItem
             v-for="product in sortedAndSearchedProducts"
             :key="product._id"
             :product="product"
           />
-        </template>
+        </div>
         <template v-else>
           <p>No products found.</p>
         </template>
@@ -88,6 +88,13 @@ export default {
 
   &::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  .flex {
+    display: flex;
+
+    flex-direction: column;
+    gap: 40px;
   }
 }
 </style>

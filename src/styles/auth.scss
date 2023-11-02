@@ -57,6 +57,12 @@
     color: white;
 
     border: none;
+
+    &:disabled {
+      background-color: lightgray;
+
+      color: black;
+    }
   }
 
   &__register {
