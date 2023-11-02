@@ -16,7 +16,12 @@
         class="user__photo-item"
       />
 
-      <img class="icon" src="../assets/icons/settings.png" alt="settings" />
+      <img
+        class="icon"
+        src="../assets/icons/logout.png"
+        alt="settings"
+        @click="handleLogout"
+      />
     </div>
 
     <nav class="nav">
@@ -32,14 +37,31 @@
 </template>
 
 <script>
+import router from '../router/router';
 import { navArray } from '../utils/NavHelper';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   data() {
     return {
       navArray,
     };
+  },
+
+  methods: {
+    ...mapActions({
+      onLogout: 'auth/onLogout',
+    }),
+
+    handleLogout() {
+      const answ = window.confirm('Are you sure you want to logout');
+
+      if (answ) {
+        this.onLogout();
+
+        router.push('/');
+      }
+    },
   },
 
   computed: {

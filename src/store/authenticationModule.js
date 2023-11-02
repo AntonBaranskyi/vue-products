@@ -25,6 +25,10 @@ export const authenticationModule = {
     setSignUpError(state, bool) {
       state.signUpError = bool;
     },
+
+    setLogout(state) {
+      state.userData = null;
+    },
   },
   actions: {
     async onChangeUserData({ commit }) {
@@ -71,6 +75,13 @@ export const authenticationModule = {
       } catch (error) {
         commit('setSignUpError', true);
       }
+    },
+
+    onLogout({ commit }) {
+      commit('setLogout');
+      commit('setIsAuth', false);
+
+      window.localStorage.removeItem('token');
     },
   },
   namespaced: true,
