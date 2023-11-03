@@ -1,6 +1,5 @@
 <script>
 import { mapActions } from 'vuex';
-import SocketioService from './services/socketio.server.js';
 import Header from './components/Header.vue';
 
 import { io } from 'socket.io-client';
@@ -55,7 +54,9 @@ export default {
   <notifications />
   <Header />
   <div class="main grid">
-    <RouterView />
+    <TransitionGroup>
+      <RouterView />
+    </TransitionGroup>
   </div>
 </template>
 

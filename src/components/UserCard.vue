@@ -54,6 +54,8 @@ export default {
       height: 100px;
       border-radius: 50%;
       object-fit: contain;
+
+      border: 2px solid rgba(0, 0, 0, 0.1);
     }
   }
   .user__name {
