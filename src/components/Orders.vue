@@ -23,15 +23,13 @@
         >
           <div class="spinner-border" role="status"></div>
         </div>
-
-        <OrderItem
-          v-else
-          v-for="order in orders"
-          :key="order._id"
-          :order="order"
-        />
+        <template v-else>
+          <p v-if="orders.length === 0">
+            No orders available, please Add order
+          </p>
+          <OrderItem v-for="order in orders" :key="order._id" :order="order" />
+        </template>
       </div>
-
       <OrderModal v-if="isOrderOpen" />
     </div>
   </div>
