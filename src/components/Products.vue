@@ -9,11 +9,13 @@
       </div>
       <div v-else>
         <div class="flex" v-if="sortedAndSearchedProducts.length > 0">
-          <ProductItem
-            v-for="product in sortedAndSearchedProducts"
-            :key="product._id"
-            :product="product"
-          />
+          <TransitionGroup name="product-list">
+            <ProductItem
+              v-for="product in sortedAndSearchedProducts"
+              :key="product._id"
+              :product="product"
+            />
+          </TransitionGroup>
         </div>
         <template v-else>
           <p>No products found.</p>
@@ -95,6 +97,18 @@ export default {
 
     flex-direction: column;
     gap: 40px;
+  }
+
+  .product-list-move,
+  .product-list-enter-active,
+  .product-list-leave-active {
+    transition: all 0.4s ease;
+  }
+
+  .product-list-enter-from,
+  .product-list-leave-to {
+    opacity: 0;
+    transform: translateX(130px);
   }
 }
 </style>

@@ -21,14 +21,15 @@
       />
     </div>
 
-    <OrderModalItem
-      v-if="orderActive.products.length > 0"
-      v-for="activeOrder in orderActive.products"
-      :key="activeOrder._id"
-      :activeOrder="activeOrder"
-    />
-
-    <p class="empty" v-else>List is empty! Please add a product</p>
+    <TransitionGroup name="product-list">
+      <OrderModalItem
+        v-if="orderActive.products.length > 0"
+        v-for="activeOrder in orderActive.products"
+        :key="activeOrder._id"
+        :activeOrder="activeOrder"
+      />
+      <p class="empty" v-else>List is empty! Please add a product</p>
+    </TransitionGroup>
   </div>
 </template>
 
@@ -95,5 +96,16 @@ p {
   line-height: 200px;
 }
 
+.product-list-move,
+.product-list-enter-active,
+.product-list-leave-active {
+  transition: all 0.4s ease;
+}
+
+.product-list-enter-from,
+.product-list-leave-to {
+  opacity: 0;
+  transform: translateX(130px);
+}
 @import '../styles/icon.scss';
 </style>

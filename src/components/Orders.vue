@@ -103,6 +103,8 @@ export default {
 
     gap: 30px;
     padding-inline: 25px;
+
+    overflow: hidden;
   }
 
   .modal-open {
