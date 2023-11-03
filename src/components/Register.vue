@@ -188,7 +188,7 @@ export default {
   computed: {
     ...mapState({
       isAuth: (state) => state.auth.isAuth,
-      signUpError: (state) => state.auth.logginError,
+      signUpError: (state) => state.auth.signUpError,
     }),
 
     hasErrors() {
