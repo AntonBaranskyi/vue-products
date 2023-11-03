@@ -113,6 +113,7 @@ export const productsModule = {
 
     async onAddProduct({ commit }, data) {
       try {
+        console.log(data);
         const answ = await addProduct(data);
         commit('onAddNewProduct', answ);
         commit('setAddedProduct', answ);

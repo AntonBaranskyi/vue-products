@@ -40,7 +40,9 @@
               max="5000"
               placeholder="Choose product price "
               class="input"
+              @blur="numberError = ''"
             />
+            <p v-if="numberError" class="text text-danger">{{ numberError }}</p>
           </div>
 
           <div class="wrapper">
@@ -79,6 +81,8 @@ export default {
       productTitle: '',
       productPrice: 0,
       productStatus: '',
+
+      numberError: '',
     };
   },
   props: {
@@ -121,6 +125,14 @@ export default {
     },
 
     async onSubmitModal() {
+      const price = parseFloat(this.productPrice);
+      if (isNaN(price) || price < 0) {
+        this.productPrice = 0;
+
+        this.numberError = 'Only positive numbers';
+        return;
+      }
+
       const objToSend = {
         title: this.productTitle,
         isNew: this.productStatus === '1' ? true : false,
@@ -130,6 +142,8 @@ export default {
         order: this.orderActive.id,
         userId: this.userData._id,
       };
+
+      console.log(objToSend);
 
       const addedProduct = await this.onAddProduct(objToSend);
 

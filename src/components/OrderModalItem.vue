@@ -18,7 +18,7 @@
         'text-danger': activeOrder.isNew !== 1,
       }"
     >
-      {{ activeOrder.isNew === 1 ? 'Свободен' : 'Занят' }}
+      {{ activeOrder.isNew === 1 ? 'Free' : 'Engaged' }}
     </p>
 
     <img

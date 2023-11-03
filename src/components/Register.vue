@@ -40,7 +40,7 @@
             <input
               placeholder="Write your password"
               class="wrapper__input input"
-              type="text"
+              type="password"
               v-model="password"
               @blur="validatePassword"
             />
