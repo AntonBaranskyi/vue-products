@@ -88,7 +88,7 @@ import { toast } from 'vue3-toastify';
 
 import router from '../router/router';
 
-import axios from '../helpers/axios';
+import axios from 'axios';
 
 export default {
   data() {
@@ -170,7 +170,7 @@ export default {
         const file = event.target.files[0];
         formData.append('image', file);
         const response = await axios.post(
-          'http://localhost:8000/upload',
+          'https://vue-products-server.onrender.com/upload',
           formData
         );
         this.avatarUrl = response.data.url;
