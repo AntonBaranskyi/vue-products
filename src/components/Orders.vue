@@ -27,7 +27,13 @@
           <p v-if="orders.length === 0">
             No orders available, please Add order
           </p>
-          <OrderItem v-for="order in orders" :key="order._id" :order="order" />
+          <TransitionGroup name="order-list">
+            <OrderItem
+              v-for="order in orders"
+              :key="order._id"
+              :order="order"
+            />
+          </TransitionGroup>
         </template>
       </div>
       <OrderModal v-if="isOrderOpen" />
@@ -115,6 +121,18 @@ export default {
     display: inline-block;
     margin-right: 5px;
     font-weight: 500;
+  }
+
+  .order-list-move,
+  .order-list-enter-active,
+  .order-list-leave-active {
+    transition: all 0.4s ease;
+  }
+
+  .order-list-enter-from,
+  .order-list-leave-to {
+    opacity: 0;
+    transform: translateX(130px);
   }
   @import '../styles/icon.scss';
 }
