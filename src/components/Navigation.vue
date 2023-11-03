@@ -4,7 +4,7 @@
     <div class="sidebar__profile sidebar__profile-margin">
       <img
         v-if="userData?.avatarUrl"
-        :src="`https://vue-products-server.onrender.com${userData.avatarUrl}`"
+        :src="`https://vue-products-server.onrender.com/${userData.avatarUrl}`"
         alt="photo"
         class="user__photo-item"
       />

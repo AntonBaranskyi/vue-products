@@ -3,7 +3,7 @@
     <div class="user__photo">
       <img
         v-if="user.avatarUrl"
-        :src="`https://vue-products-server.onrender.com${user.avatarUrl}`"
+        :src="`https://vue-products-server.onrender.com/${user.avatarUrl}`"
         alt="photo"
         class="user__photo-item"
       />
