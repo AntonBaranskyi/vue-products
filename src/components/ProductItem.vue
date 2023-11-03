@@ -18,7 +18,7 @@
         'text-danger': product.isNew !== 1,
       }"
     >
-      {{ product.isNew === 1 ? 'Свободен' : 'Занят' }}
+      {{ product.isNew === 1 ? 'Free' : 'Engaged' }}
     </p>
 
     <div class="item__date">

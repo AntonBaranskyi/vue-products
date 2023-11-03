@@ -57,7 +57,12 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button @click="onSubmitModal" type="button" class="btn btn-primary">
+          <button
+            @click="onSubmitModal"
+            :disabled="!productTitle || !productPrice || !productStatus"
+            type="button"
+            class="btn btn-primary"
+          >
             Add product
           </button>
         </div>
