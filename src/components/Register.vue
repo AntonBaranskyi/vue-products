@@ -153,6 +153,8 @@ export default {
         objToSend.avatarUrl = this.avatarUrl;
       }
 
+      console.log(objToSend);
+
       const result = await this.onSendSignUp(objToSend);
 
       console.log(result);
@@ -171,6 +173,7 @@ export default {
         formData.append('image', file);
         const response = await axios.post(
           'https://vue-products-server.onrender.com/upload',
+          // 'http://localhost:8000/upload',
           formData
         );
         this.avatarUrl = response.data.url;
