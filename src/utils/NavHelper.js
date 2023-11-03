@@ -13,8 +13,8 @@ export const navArray = [
     path: '/main',
     name: 'Products',
   },
-  {
-    path: '/settings',
-    name: 'Settings',
-  },
+  // {
+  //   path: '/settings',
+  //   name: 'Settings',
+  // },
 ];
